@@ -193,7 +193,7 @@ const TRANSPORT_TYPES = [
 	},
 ];
 
-const INCIDENTS = [
+const INCIDENTS_TYPE = [
 	{
 		name: "Malaise voyageur",
 		id: "passenger_illness",
@@ -307,4 +307,4 @@ const DURATION = [
 	},
 ];
 
-export { LINES, INCIDENTS, DURATION, TRANSPORT_TYPES };
+export { LINES, INCIDENTS_TYPE, DURATION, TRANSPORT_TYPES };

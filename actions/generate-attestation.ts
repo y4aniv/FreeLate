@@ -3,15 +3,16 @@ import fs from "node:fs/promises";
 import fontkit from "@pdf-lib/fontkit";
 import { PDFDocument, type PDFFont, type PDFPage, rgb } from "pdf-lib";
 import sharp from "sharp";
-import { LINES, TRANSPORT_TYPES } from "@/lib/constants";
+import { INCIDENTS_TYPE, LINES, TRANSPORT_TYPES } from "@/lib/constants";
+import { attestationSchema } from "@/lib/schema";
 import { randomAgentId } from "@/lib/utils";
 
 interface AttestationParams {
 	transportLine: string;
 	incidentType: string;
 	recipientName: string;
-	incidentTimestamp: string;
-	issueTimestamp: string;
+	incidentTimestamp: Date;
+	issueTimestamp: Date;
 	incidentDuration: string;
 }
 
@@ -152,6 +153,15 @@ const generateAttestation = async (
 		incidentDuration,
 	} = params;
 
+	try {
+		await attestationSchema.validate(params);
+	} catch (_) {
+		throw new Error("ERROR_INVALID_PARAMS");
+	}
+
+	const incidentDate = new Date(incidentTimestamp);
+	const issueDate = new Date(issueTimestamp);
+
 	const existingPdfBytes = await fs.readFile(ASSET_PATHS.basePdf);
 	const pdfDoc = await PDFDocument.load(existingPdfBytes);
 
@@ -162,21 +172,45 @@ const generateAttestation = async (
 
 	addTextToPdf(
 		page,
-		incidentType,
+		INCIDENTS_TYPE.find((i) => i.id === incidentType)?.name || "",
 		TEXT_POSITIONS.incident,
 		height,
 		nimbusSansFont,
 	);
 	addTextToPdf(
 		page,
-		incidentTimestamp,
+		incidentDate.toLocaleDateString("fr-FR", {
+			day: "2-digit",
+			month: "2-digit",
+			year: "numeric",
+		}) +
+			" à " +
+			incidentDate
+				.toLocaleTimeString("fr-FR", {
+					hour: "2-digit",
+					minute: "2-digit",
+				})
+				.replace(":", "h") +
+			"mn",
 		TEXT_POSITIONS.incidentDateTime,
 		height,
 		nimbusSansFont,
 	);
 	addTextToPdf(
 		page,
-		issueTimestamp,
+		issueDate.toLocaleDateString("fr-FR", {
+			day: "2-digit",
+			month: "2-digit",
+			year: "numeric",
+		}) +
+			" à " +
+			issueDate
+				.toLocaleTimeString("fr-FR", {
+					hour: "2-digit",
+					minute: "2-digit",
+				})
+				.replace(":", "h") +
+			"mn",
 		TEXT_POSITIONS.issuedAt,
 		height,
 		nimbusSansFont,
