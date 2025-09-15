@@ -29,7 +29,7 @@ const Root = () => {
 					)}
 				/>
 				<TextInput
-					label={"Prénom & nom du bénéficiaire"}
+					label={"Identité du bénéficiaire"}
 					placeholder={"Fulgence Bienvenüe"}
 				/>
 				<DateTimePicker
