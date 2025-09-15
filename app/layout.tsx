@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans } from "next/font/google";
 import "@/styles/globals.css";
 import "@mantine/core/styles.css";
@@ -14,6 +14,13 @@ const dmSans = DM_Sans({
 
 const metadata: Metadata = {
 	title: "FreeLate – La galère est réelle. L’attestation aussi.",
+};
+
+const viewport: Viewport = {
+	width: "device-width",
+	initialScale: 1,
+	maximumScale: 1,
+	userScalable: false,
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
@@ -32,5 +39,5 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	);
 };
 
-export { metadata };
+export { metadata, viewport };
 export default RootLayout;

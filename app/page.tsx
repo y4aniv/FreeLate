@@ -4,12 +4,33 @@ import { Button, Center, Select, TextInput } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { yupResolver } from "mantine-form-yup-resolver";
+import { useEffect } from "react";
 import generateAttestation from "@/actions/generate-attestation";
 import Logo from "@/components/logo";
 import { DURATION, INCIDENTS_TYPE, LINES } from "@/lib/constants";
 import { attestationSchema } from "@/lib/schema";
 
 const Root = () => {
+	useEffect(() => {
+		document.addEventListener(
+			"touchstart",
+			(e) => {
+				if (e.touches.length > 1) {
+					e.preventDefault();
+				}
+			},
+			{ passive: false },
+		);
+
+		document.addEventListener(
+			"gesturestart",
+			(e) => {
+				e.preventDefault();
+			},
+			{ passive: false },
+		);
+	}, []);
+
 	const form = useForm({
 		mode: "uncontrolled",
 		initialValues: {
