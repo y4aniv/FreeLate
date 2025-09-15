@@ -1,10 +1,14 @@
-import { type MantineThemeOverride, MantineThemeProvider } from "@mantine/core";
+import {
+	type MantineThemeOverride,
+	MantineProvider as MantineThemeProvider,
+} from "@mantine/core";
 import "@mantine/core/styles.css";
 
 const THEME: MantineThemeOverride = {
 	defaultRadius: "md",
 	colors: {
 		brand: [
+			"#e6f4f1",
 			"#e0f7f1",
 			"#b3ecdd",
 			"#80e0c7",
