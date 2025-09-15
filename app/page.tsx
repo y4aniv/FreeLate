@@ -1,8 +1,10 @@
+"use client";
+
 import { Button, Center, Select, Stack, TextInput } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
+// import generateAttestation from "@/actions/generate-attestation";
 import Logo from "@/components/logo";
 import { DURATION, INCIDENTS, LINES } from "@/lib/constants";
-import { randomAgentId } from "@/lib/utils";
 
 const Root = () => {
 	return (
@@ -33,6 +35,10 @@ const Root = () => {
 					placeholder={"Fulgence Bienvenüe"}
 				/>
 				<DateTimePicker
+					label={"Date & heure de l'incident"}
+					placeholder={"21/03/1948 00:00"}
+				/>
+				<DateTimePicker
 					label={"Date & heure de délivrance de l'attestation"}
 					placeholder={"21/03/1948 00:00"}
 				/>
@@ -44,12 +50,20 @@ const Root = () => {
 						value: duration.id,
 					}))}
 				/>
-				<TextInput
-					label={"Matricule de l’agent émetteur"}
-					defaultValue={randomAgentId()}
-					disabled
-				/>
-				<Button fullWidth type="submit">
+				<Button
+					fullWidth
+					onClick={async () => {
+						// const pdfBytes = await generateAttestation({
+						//   transportLine: "rer_a",
+						//   incidentType: "Panne de signalisation",
+						//   recipientName: "MILA Grazia",
+						//   incidentTimestamp: "15/09/2025 à 10h00mn",
+						//   issueTimestamp: "15/09/2025 à 18h27mn",
+						//   incidentDuration: "over_15_minutes",
+						//   issuerAgentId: "GB236678",
+						// });
+					}}
+				>
 					{"Générer mon attestation"}
 				</Button>
 				<p className="text-xs text-gray-500 text-center">
