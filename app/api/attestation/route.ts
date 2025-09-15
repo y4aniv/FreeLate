@@ -1,6 +1,6 @@
-"use server";
 import fs from "node:fs/promises";
 import fontkit from "@pdf-lib/fontkit";
+import { type NextRequest, NextResponse } from "next/server";
 import { PDFDocument, type PDFFont, type PDFPage, rgb } from "pdf-lib";
 import sharp from "sharp";
 import { INCIDENTS_TYPE, LINES, TRANSPORT_TYPES } from "@/lib/constants";
@@ -237,4 +237,60 @@ const generateAttestation = async (
 	return pdfDoc.save();
 };
 
-export default generateAttestation;
+const POST = async (request: NextRequest) => {
+	try {
+		const body = await request.json();
+
+		const {
+			transportLine,
+			incidentType,
+			recipientName,
+			incidentTimestamp,
+			issueTimestamp,
+			incidentDuration,
+		} = body;
+
+		if (
+			!transportLine ||
+			!incidentType ||
+			!recipientName ||
+			!incidentTimestamp ||
+			!issueTimestamp ||
+			!incidentDuration
+		) {
+			return NextResponse.json({ error: "MISSING_PARAMS" }, { status: 400 });
+		}
+
+		const params: AttestationParams = {
+			transportLine,
+			incidentType,
+			recipientName,
+			incidentTimestamp: new Date(incidentTimestamp),
+			issueTimestamp: new Date(issueTimestamp),
+			incidentDuration,
+		};
+
+		const pdfBytes = await generateAttestation(params);
+
+		return new NextResponse(Buffer.from(pdfBytes), {
+			status: 200,
+			headers: {
+				"Content-Type": "application/pdf",
+				"Content-Disposition": `attachment; filename="attestation-${Date.now()}.pdf"`,
+				"Content-Length": pdfBytes.length.toString(),
+			},
+		});
+	} catch (error) {
+		if (error instanceof Error && error.message === "ERROR_INVALID_PARAMS") {
+			return NextResponse.json({ error: "INVALID_PARAMS" }, { status: 400 });
+		}
+
+		return NextResponse.json(
+			{ error: "INTERNAL_SERVER_ERROR" },
+			{ status: 500 },
+		);
+	}
+};
+
+export const runtime = "nodejs";
+export { POST };

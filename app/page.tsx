@@ -5,7 +5,6 @@ import { DateTimePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { yupResolver } from "mantine-form-yup-resolver";
 import { useEffect } from "react";
-import generateAttestation from "@/actions/generate-attestation";
 import Logo from "@/components/logo";
 import { DURATION, INCIDENTS_TYPE, LINES } from "@/lib/constants";
 import { attestationSchema } from "@/lib/schema";
@@ -48,21 +47,33 @@ const Root = () => {
 		values: typeof attestationSchema.__outputType,
 	) => {
 		try {
-			const pdfBytes = await generateAttestation({
-				transportLine: values.transportLine,
-				incidentType: values.incidentType,
-				recipientName: values.recipientName,
-				incidentTimestamp: values.incidentTimestamp,
-				issueTimestamp: values.issueTimestamp,
-				incidentDuration: values.incidentDuration,
+			const response = await fetch("/api/attestation", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					transportLine: values.transportLine,
+					incidentType: values.incidentType,
+					recipientName: values.recipientName,
+					incidentTimestamp: values.incidentTimestamp,
+					issueTimestamp: values.issueTimestamp,
+					incidentDuration: values.incidentDuration,
+				}),
 			});
-			const blob = new Blob([new Uint8Array(pdfBytes)], {
-				type: "application/pdf",
-			});
+
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(
+					errorData.error || "Erreur lors de la génération du PDF",
+				);
+			}
+
+			const blob = await response.blob();
 			const url = URL.createObjectURL(blob);
 			window.open(url, "_blank", "noopener,noreferrer");
 		} catch (error) {
-			console.warn(error);
+			console.error("Erreur:", error);
 		}
 	};
 
@@ -124,7 +135,7 @@ const Root = () => {
 					key={form.key("incidentDuration")}
 					{...form.getInputProps("incidentDuration")}
 				/>
-				<Button fullWidth type="submit">
+				<Button fullWidth type="submit" loading={form.submitting}>
 					{"Générer mon attestation"}
 				</Button>
 				<p className="text-xs text-gray-500 text-center">
