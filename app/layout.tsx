@@ -4,8 +4,8 @@ import "@/styles/globals.css";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 import { ColorSchemeScript } from "@mantine/core";
+import { Analytics } from "@vercel/analytics/next";
 import MantineProvider from "@/providers/mantine";
-import "dayjs/locale/fr";
 
 const dmSans = DM_Sans({
 	subsets: ["latin"],
@@ -23,7 +23,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 				<ColorSchemeScript />
 			</head>
 			<body className={`${dmSans.variable} antialiased`}>
-				<MantineProvider>{children}</MantineProvider>
+				<MantineProvider>
+					{children}
+					<Analytics />
+				</MantineProvider>
 			</body>
 		</html>
 	);
