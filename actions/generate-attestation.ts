@@ -4,6 +4,7 @@ import fontkit from "@pdf-lib/fontkit";
 import { PDFDocument, type PDFFont, type PDFPage, rgb } from "pdf-lib";
 import sharp from "sharp";
 import { LINES, TRANSPORT_TYPES } from "@/lib/constants";
+import { randomAgentId } from "@/lib/utils";
 
 interface AttestationParams {
 	transportLine: string;
@@ -12,7 +13,6 @@ interface AttestationParams {
 	incidentTimestamp: string;
 	issueTimestamp: string;
 	incidentDuration: string;
-	issuerAgentId: string;
 }
 
 const FONT_SIZE = 12;
@@ -150,7 +150,6 @@ const generateAttestation = async (
 		incidentTimestamp,
 		issueTimestamp,
 		incidentDuration,
-		issuerAgentId,
 	} = params;
 
 	const existingPdfBytes = await fs.readFile(ASSET_PATHS.basePdf);
@@ -191,7 +190,7 @@ const generateAttestation = async (
 	);
 	addTextToPdf(
 		page,
-		issuerAgentId,
+		randomAgentId(),
 		TEXT_POSITIONS.agentId,
 		height,
 		nimbusSansFont,
