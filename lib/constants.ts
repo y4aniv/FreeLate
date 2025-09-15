@@ -2,118 +2,162 @@ const LINES = [
 	{
 		name: "1",
 		id: "1",
+		transport_type: "metro",
 	},
 	{
 		name: "2",
 		id: "2",
+		transport_type: "metro",
 	},
 	{
 		name: "3",
 		id: "3",
+		transport_type: "metro",
 	},
 	{
 		name: "3bis",
 		id: "3bis",
+		transport_type: "metro",
 	},
 	{
 		name: "4",
 		id: "4",
+		transport_type: "metro",
 	},
 	{
 		name: "5",
 		id: "5",
+		transport_type: "metro",
 	},
 	{
 		name: "6",
 		id: "6",
+		transport_type: "metro",
 	},
 	{
 		name: "7",
 		id: "7",
+		transport_type: "metro",
 	},
 	{
 		name: "7bis",
 		id: "7bis",
+		transport_type: "metro",
 	},
 	{
 		name: "8",
 		id: "8",
+		transport_type: "metro",
 	},
 	{
 		name: "9",
 		id: "9",
+		transport_type: "metro",
 	},
 	{
 		name: "10",
 		id: "10",
+		transport_type: "metro",
 	},
 	{
 		name: "11",
 		id: "11",
+		transport_type: "metro",
 	},
 	{
 		name: "12",
 		id: "12",
+		transport_type: "metro",
 	},
 	{
 		name: "13",
 		id: "13",
+		transport_type: "metro",
 	},
 	{
 		name: "14",
 		id: "14",
+		transport_type: "metro",
 	},
 	{
 		name: "RER A",
 		id: "rer_a",
+		transport_type: "rer",
 	},
 	{
 		name: "RER B",
 		id: "rer_b",
+		transport_type: "rer",
 	},
 	{
 		name: "RER C",
 		id: "rer_c",
+		transport_type: "rer",
 	},
 	{
 		name: "T1",
 		id: "t1",
+		transport_type: "tramway",
 	},
 	{
 		name: "T2",
 		id: "t2",
+		transport_type: "tramway",
 	},
 	{
 		name: "T3a",
 		id: "t3a",
+		transport_type: "tramway",
 	},
 	{
 		name: "T3b",
 		id: "t3b",
+		transport_type: "tramway",
 	},
 	{
 		name: "T4",
 		id: "t4",
+		transport_type: "tramway",
 	},
 	{
 		name: "T5",
 		id: "t5",
+		transport_type: "tramway",
 	},
 	{
 		name: "T6",
 		id: "t6",
+		transport_type: "tramway",
 	},
 	{
 		name: "T7",
 		id: "t7",
+		transport_type: "tramway",
 	},
 	{
 		name: "T8",
 		id: "t8",
+		transport_type: "tramway",
 	},
 	{
 		name: "T9",
 		id: "t9",
+		transport_type: "tramway",
+	},
+];
+
+const TRANSPORT_TYPES = [
+	{
+		name: "Métro",
+		id: "metro",
+	},
+	{
+		name: "RER",
+		id: "rer",
+	},
+	{
+		name: "Tramway",
+		id: "tramway",
 	},
 ];
 
@@ -231,4 +275,4 @@ const DURATION = [
 	},
 ];
 
-export { LINES, INCIDENTS, DURATION };
+export { LINES, INCIDENTS, DURATION, TRANSPORT_TYPES };
