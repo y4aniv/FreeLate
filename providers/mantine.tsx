@@ -3,6 +3,8 @@ import {
 	MantineProvider as MantineThemeProvider,
 } from "@mantine/core";
 import "@mantine/core/styles.css";
+import { DatesProvider } from "@mantine/dates";
+import "dayjs/locale/fr";
 
 const THEME: MantineThemeOverride = {
 	defaultRadius: "md",
@@ -25,7 +27,11 @@ const THEME: MantineThemeOverride = {
 };
 
 const MantineProvider = ({ children }: { children: React.ReactNode }) => {
-	return <MantineThemeProvider theme={THEME}>{children}</MantineThemeProvider>;
+	return (
+		<MantineThemeProvider theme={THEME}>
+			<DatesProvider settings={{ locale: "fr" }}>{children}</DatesProvider>
+		</MantineThemeProvider>
+	);
 };
 
 export default MantineProvider;

@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "@/styles/globals.css";
 import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 import { ColorSchemeScript } from "@mantine/core";
 import MantineProvider from "@/providers/mantine";
+import "dayjs/locale/fr";
 
 const dmSans = DM_Sans({
 	subsets: ["latin"],
@@ -16,7 +18,7 @@ const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<html lang={"fr"}>
+		<html lang={"fr"} suppressHydrationWarning>
 			<head>
 				<ColorSchemeScript />
 			</head>
