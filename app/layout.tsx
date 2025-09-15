@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "@/styles/globals.css";
+import "@mantine/core/styles.css";
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 
 const dmSans = DM_Sans({
 	subsets: ["latin"],
@@ -14,7 +16,12 @@ const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<html lang={"fr"}>
-			<body className={`${dmSans.variable} antialiased`}>{children}</body>
+			<head>
+				<ColorSchemeScript />
+			</head>
+			<body className={`${dmSans.variable} antialiased`}>
+				<MantineProvider>{children}</MantineProvider>
+			</body>
 		</html>
 	);
 };
