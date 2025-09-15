@@ -1,8 +1,8 @@
-"use client";
-
 import { Button, Center, Select, Stack, TextInput } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import Logo from "@/components/logo";
+import { LINES } from "@/lib/constants";
+import { randomAgentId } from "@/lib/utils";
 
 const Root = () => {
 	return (
@@ -13,6 +13,7 @@ const Root = () => {
 					label={"Ligne de transport"}
 					placeholder={"3bis, 9, RER A, ..."}
 					searchable
+					data={LINES.map((line) => ({ label: line.name, value: line.value }))}
 				/>
 				<Select
 					label={"Nature de l'incident"}
@@ -30,7 +31,7 @@ const Root = () => {
 				<Select label={"Durée de l'incident"} placeholder={"30 minutes"} />
 				<TextInput
 					label={"Matricule de l’agent émetteur"}
-					defaultValue={"FB84392"}
+					defaultValue={randomAgentId()}
 					disabled
 				/>
 				<Button fullWidth type="submit">
