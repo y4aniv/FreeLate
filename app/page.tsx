@@ -3,6 +3,7 @@
 import { Button, Center, Select, TextInput } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
 import { yupResolver } from "mantine-form-yup-resolver";
 import { useEffect } from "react";
 import Logo from "@/components/logo";
@@ -73,7 +74,14 @@ const Root = () => {
 			const url = URL.createObjectURL(blob);
 			window.open(url, "_blank", "noopener,noreferrer");
 		} catch (error) {
-			console.error("Erreur:", error);
+			notifications.show({
+				title: "Un problème est survenu",
+				message:
+					error instanceof Error
+						? error.message
+						: "Erreur lors de la génération du PDF",
+				color: "red",
+			});
 		}
 	};
 

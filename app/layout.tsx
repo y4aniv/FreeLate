@@ -3,7 +3,9 @@ import { DM_Sans } from "next/font/google";
 import "@/styles/globals.css";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
+import "@mantine/notifications/styles.css";
 import { ColorSchemeScript } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 import { Analytics } from "@vercel/analytics/next";
 import MantineProvider from "@/providers/mantine";
 
@@ -31,8 +33,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 			</head>
 			<body className={`${dmSans.variable} antialiased`}>
 				<MantineProvider>
-					{children}
+					<Notifications position="top-right" autoClose={5000} />
 					<Analytics />
+					{children}
 				</MantineProvider>
 			</body>
 		</html>
