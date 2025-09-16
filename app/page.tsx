@@ -143,7 +143,12 @@ const Root = () => {
 					key={form.key("incidentDuration")}
 					{...form.getInputProps("incidentDuration")}
 				/>
-				<Button fullWidth type="submit" loading={form.submitting}>
+				<Button
+					fullWidth
+					type="submit"
+					loading={form.submitting}
+					disabled={!form.isValid()}
+				>
 					{"Générer mon attestation"}
 				</Button>
 				<p className="text-xs text-gray-500 text-center">
