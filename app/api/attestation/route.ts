@@ -284,11 +284,9 @@ const POST = async (request: NextRequest) => {
 		}
 
 		return NextResponse.json(
-			{ error: "INTERNAL_SERVER_ERROR" },
+			{ error: "INTERNAL_SERVER_ERROR", details: JSON.stringify(error) },
 			{ status: 500 },
 		);
 	}
 };
-
-export const runtime = "nodejs";
 export { POST };
