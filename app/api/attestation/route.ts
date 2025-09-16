@@ -290,7 +290,7 @@ const POST = async (request: NextRequest) => {
 		}
 
 		return NextResponse.json(
-			{ error: "INTERNAL_SERVER_ERROR", details: JSON.stringify(error) },
+			{ error: "INTERNAL_SERVER_ERROR" },
 			{ status: 500 },
 		);
 	}
