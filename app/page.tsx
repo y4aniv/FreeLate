@@ -72,7 +72,7 @@ const Root = () => {
 
 			const blob = await response.blob();
 			const url = URL.createObjectURL(blob);
-			window.open(url, "_blank", "noopener,noreferrer");
+			window.location.href = url;
 		} catch (error) {
 			notifications.show({
 				title: "Un problème est survenu",
