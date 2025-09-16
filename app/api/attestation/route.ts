@@ -2,7 +2,6 @@ import fs from "node:fs/promises";
 import fontkit from "@pdf-lib/fontkit";
 import { type NextRequest, NextResponse } from "next/server";
 import { PDFDocument, type PDFFont, type PDFPage, rgb } from "pdf-lib";
-import sharp from "sharp";
 import { INCIDENTS_TYPE, LINES, TRANSPORT_TYPES } from "@/lib/constants";
 import { attestationSchema } from "@/lib/schema";
 import { randomAgentId } from "@/lib/utils";
@@ -61,9 +60,8 @@ const loadFonts = async (pdfDoc: PDFDocument) => {
 	return { nimbusSansFont, D050000LFont };
 };
 
-const convertSvgToPng = async (svgPath: string) => {
-	const svgBytes = await fs.readFile(svgPath);
-	return sharp(svgBytes).png().toBuffer();
+const loadPngIcon = async (iconPath: string) => {
+	return await fs.readFile(`public/assets/${iconPath}`);
 };
 
 const addTextToPdf = (
@@ -117,8 +115,8 @@ const addIcons = async (
 	if (!lineData || !transportType) return;
 
 	const [lineIconBuffer, transportIconBuffer] = await Promise.all([
-		convertSvgToPng(`public/assets/${lineData.icon}`),
-		convertSvgToPng(`public/assets/${transportType.icon}`),
+		loadPngIcon(lineData.icon),
+		loadPngIcon(transportType.icon),
 	]);
 
 	const [lineIconPng, transportIconPng] = await Promise.all([
