@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import path from "node:path";
 import fontkit from "@pdf-lib/fontkit";
 import { type NextRequest, NextResponse } from "next/server";
 import { PDFDocument, type PDFFont, type PDFPage, rgb } from "pdf-lib";
@@ -21,9 +22,12 @@ const CHECKBOX_CHAR = String.fromCharCode(0x0033);
 const ICON_SIZE = 20;
 
 const ASSET_PATHS = {
-	basePdf: "public/assets/pdf/base.pdf",
-	nimbusSansFont: "public/assets/fonts/nimbus-sans.otf",
-	D050000LFont: "public/assets/fonts/D050000L.otf",
+	basePdf: path.join(process.cwd(), "public/assets/pdf/base.pdf"),
+	nimbusSansFont: path.join(
+		process.cwd(),
+		"public/assets/fonts/nimbus-sans.otf",
+	),
+	D050000LFont: path.join(process.cwd(), "public/assets/fonts/D050000L.otf"),
 } as const;
 
 const TEXT_POSITIONS = {
@@ -61,7 +65,9 @@ const loadFonts = async (pdfDoc: PDFDocument) => {
 };
 
 const loadPngIcon = async (iconPath: string) => {
-	return await fs.readFile(`public/assets/${iconPath}`);
+	return await fs.readFile(
+		path.join(process.cwd(), `public/assets/${iconPath}`),
+	);
 };
 
 const addTextToPdf = (
@@ -284,11 +290,9 @@ const POST = async (request: NextRequest) => {
 		}
 
 		return NextResponse.json(
-			{ error: "INTERNAL_SERVER_ERROR" },
+			{ error: "INTERNAL_SERVER_ERROR", details: JSON.stringify(error) },
 			{ status: 500 },
 		);
 	}
 };
-
-export const runtime = "nodejs";
 export { POST };
